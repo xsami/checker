@@ -1,0 +1,8 @@
+.config {
+    margin-left: 12px;
+    text-align: center;
+    border: 1px solid;
+    background-color: white;
+    border-radius: 10%;
+    padding: 0px 15px 10px;
+}

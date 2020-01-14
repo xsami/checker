@@ -1,0 +1,22 @@
+.white:hover, .red:hover {
+    cursor: pointer;
+}
+
+
+.white {
+    background-color: white;
+    border: 2px solid;
+    height: 90%;
+    border-radius: 50%;
+    width: 90%;
+    margin: 3px;
+}
+
+.red {
+    background-color: red;
+    border: 2px solid;
+    height: 90%;
+    border-radius: 50%;
+    width: 90%;
+    margin: 3px;
+}
