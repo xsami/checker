@@ -1,0 +1,23 @@
+.board {
+    margin-top: 12px;
+}
+
+.row {
+    display: block;
+}
+
+.block {
+    display: inline-block;
+    /* border: 1px solid; */
+    height: 80px;
+    width: 84px;
+    margin-bottom: -3px;
+}
+
+.cream {
+    background-color: #ffcc96;
+}
+
+.brown {
+    background-color: #dc8835;
+}
