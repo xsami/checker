@@ -50,3 +50,8 @@ export const getNewBoard = function(initialBoard){
 
     return newBoard;
 };
+
+
+export const getPossibleMoves = function(piece, board) {
+    return '<div>yes</div>'
+}
