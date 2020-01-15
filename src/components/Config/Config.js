@@ -16,26 +16,16 @@ function Piece(color='', state=false, moves=[], jumps=[], position={}) {
 }
 
 function getNewBoard(initialBoard){
-    const whitePiece = new Piece('white', true, [], [], new Position());
-    const redPiece = new Piece('red', true, [], [], new Position());
+
     const newBoard = [];
 
     for (let i = 0; i < initialBoard.length; i++) {
-        const row = initialBoard[i];
-        const newRow = [...row];
-        for (let j = 0; j < row.length; j++) {
-            let element = new Piece();
-            const decition = !(j % 2 ^ (i+1) % 2); // dark position
-            if (i < 3 && decition) {
-                // whites
-                element = whitePiece;
-                element.position = new Position(i, j);
-            } else if (i > 4 && decition) {
-                // reds
-                element = redPiece;
-                element.position = new Position(i, j);
-            }
-            newRow[j] = element;
+        const newRow = [...initialBoard[i]];
+        
+        for (let j = 0; j < newRow.length; j++) {
+            const state = !(j % 2 ^ (i+1) % 2); // state 
+            const color = (i < 3) ? 'white' : ((i > 4) ? 'red' : ''); // color
+            newRow[j] = new Piece(color, state, [], [], new Position(i, j));
         }
         newBoard.push(newRow);
     }
