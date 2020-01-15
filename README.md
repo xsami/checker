@@ -15,10 +15,12 @@ The current stage of the game only allows to set the pieces on the board. The fo
 
 The game was developed using react.js, so you can either build and opend the index file in the `dist/` folder or by running:
 ```
+$ npm install
 $ npm start
 ```
 or
 ```
+$ yarn .
 $ yarn start
 ```
 
