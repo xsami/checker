@@ -32,6 +32,7 @@ and open the browser in the specified port.
 - Validate moves
 - King creation
 - AI for self playing
+- Display posible moves by a current piece
 
 
 Made with :coffee: by xsami
