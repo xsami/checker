@@ -103,7 +103,7 @@ const piecesPossibleMoves = function(xFactor, initialPosition, currPosition, boa
     memoBoard[x][y] = true;
 
     // Validate that current position isn't the inital position
-    if (x !== initialPosition.x && y !== initialPosition.y) {
+    if (x !== initialPosition.x) {
         
         // Validate if the current position isn't blocked by other piece
         if (board[x][y].color !== '') {
