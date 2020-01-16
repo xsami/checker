@@ -1,14 +1,17 @@
 import React, { useContext } from 'react';
 import './Config.css';
 import { GameContext } from '../../context';
-import { getNewBoard, getPossibleMoves } from '../../utilities/helpers';
+import { getPossibleMoves } from '../../utilities/helpers';
 
 function CleanMoves(arr) {
   return (
     <ul>
       {
           arr.map((value, index) => (
-          <li key={index}>You can move to position: [{value.x}, {value.y}]</li>))
+              <li key={index}>
+              You can move to position: [{value.x + 1}, {value.y + 1}]
+              </li>
+            ))
       }
     </ul>
   )
@@ -16,18 +19,21 @@ function CleanMoves(arr) {
 
 function Config() {
 
-    const {board, setBoard, selectedPiece} = useContext(GameContext);
+    const {board, selectedPiece, resetGame} = useContext(GameContext);
     const { data } = selectedPiece;
     const flagDetails = data !== undefined && data.state ? <code>Possible moves<br />{CleanMoves(getPossibleMoves(data, board))} </code> : <div></div>
     return (
       <div className="config inline">
           
           <div className="header">
-            <h1>Checkers</h1>
-            <code>Made by: xsami</code>
-            <button className="play" onClick={() => setBoard(getNewBoard(board))}>
-                Start
-            </button>
+            <div className="title">Checkers</div>
+            <div className='madeby'>Made by: xsami</div>
+            <div className="play-button">
+              <button className="btn"
+                      onClick={() => resetGame(board) }>
+                PLAY
+              </button>
+            </div>
           </div>
           
           <div className="details">

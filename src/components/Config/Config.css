@@ -7,3 +7,43 @@
     padding: 0px 15px 10px;
     min-width: 350px;
 }
+
+.title {
+    font-size: 40px;
+    font-family: sans-serif;
+}
+
+.madeby {
+    font-size: 14px;
+    font-family: monospace;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    border: 0;
+    outline: none;
+    border-radius: 0;
+    padding: 15px 0;
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    background: #6b6a6a;
+    color: #ffffff;
+    transition: all 0.5s ease;
+    -webkit-appearance: none;
+}
+
+.btn:hover {
+    cursor: pointer;
+    opacity: .9;
+}
+
+.play-button {
+    padding-top: 20px; 
+}
+
+li {
+    list-style: none;
+}
