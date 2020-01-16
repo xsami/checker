@@ -7,7 +7,6 @@ const Piece = props => {
     const { setPiece } = useContext(GameContext);
 
     const ClickPiece = () => {
-        console.log(props);
         return setPiece(props);
     }
     return (
