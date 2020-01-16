@@ -3,6 +3,12 @@
 let memoBoard;
 // contains the moves in a matrix
 let moves;
+// contains the jumps in a matrix
+let jumps;
+
+// constant COLORS
+const RED = 'red';
+const WHITE = 'white';
 
 /**
  * 
@@ -44,7 +50,7 @@ export const getNewBoard = function(initialBoard){
         
         for (let j = 0; j < newRow.length; j++) {
             const state = !(j % 2 ^ (i+1) % 2); // state 
-            const color = (i < 3) ? 'white' : ((i > 4) ? 'red' : ''); // color
+            const color = (i < 3) ? WHITE : ((i > 4) ? RED : ''); // color
             newRow[j] = new Piece(color, state, new Position(i, j));
         }
         newBoard.push(newRow);
@@ -131,7 +137,7 @@ const piecesPossibleMoves = function(xFactor, initialPosition, currPosition, boa
 export const getPossibleMoves = function(piece, board) {
     
     const { color, position } = piece;
-    const xFactor = color === 'white' ? 1 : -1;
+    const xFactor = color === WHITE ? 1 : -1;
     
     // initialize memoBoard
     memoBoard = cloneMatrix(board, false);
@@ -142,4 +148,89 @@ export const getPossibleMoves = function(piece, board) {
     piecesPossibleMoves(xFactor, position, position, board);
 
     return moves;
+};
+
+/**
+ * 
+ * @param {integer} xFactor This is the up or down direction
+ * @param {Position} initialPosition This is the starting point for piece
+ * @param {Position} currPosition This is the current point of the piece
+ * @param {matrix} board The board itself
+ * 
+ * This method will fill the global variable: jumps, and must be called
+ * by using the method: getPossibleJumps
+ *
+ */
+const piecesPossibleJumps = function (xFactor, prevPosition, currPosition, board) {
+    const { x, y } = currPosition;
+    const boardLen = board.length;
+    const color = xFactor > 0 ? WHITE : RED;
+    const x1 = xFactor > 0 ? xFactor - 1 : xFactor + 1;
+    const y1 = prevPosition.y > y ? y - 1 : y + 1;
+
+    console.log({x1, y1, color})
+
+    // Invalid position validation
+    if (x < 0 || x >= boardLen || y < 0 || y >= boardLen) {
+        return;
+    }
+
+    // Already visited position validation
+    if (memoBoard[x][y]) {
+        return;
+    }
+    // Mark current position as visited
+    memoBoard[x][y] = true;
+
+    // Validate that current position isn't the inital position
+    if (x !== prevPosition.x) {
+
+        
+        
+
+        // Validate if the current position isn't blocked by other piece
+        if (board[x][y].color !== '') {
+            return;
+        }
+
+
+
+        // Validate if the current position isn't blocked by other piece
+        // if (board[x1][y1].color === color || board[x1][y1].color === '') {
+        //     return;
+        // }
+
+        jumps.push(currPosition);
+    }
+
+    piecesPossibleJumps(xFactor, currPosition, new Position(x + xFactor, y + 2), board);
+    piecesPossibleJumps(xFactor, currPosition, new Position(x + xFactor, y - 2), board);
+
+    return;
+};
+
+
+/**
+ * 
+ * @param {Piece} piece 
+ * @param {Board} board 
+ * 
+ * Given a piece and the board this function return
+ * an array with the possibles jumps from this piece
+ * in the board.
+ */
+export const getPossibleJumps = function(piece, board) {
+    
+    const { color, position } = piece;
+    const xFactor = color === WHITE ? 2 : -2;
+    
+    // initialize memoBoard
+    memoBoard = cloneMatrix(board, false);
+    // initialize moves array
+    jumps = [];
+
+    // Call method to fill with possible moves
+    piecesPossibleJumps(xFactor, position, position, board);
+
+    return jumps;
 };
