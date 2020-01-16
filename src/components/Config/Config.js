@@ -9,7 +9,7 @@ function CleanMoves(arr) {
       {
           arr.map((value, index) => (
               <li key={index}>
-              You can move to position: [{value.x + 1}, {value.y + 1}]
+              You can move to position: [{value.x}, {value.y}]
               </li>
             ))
       }
