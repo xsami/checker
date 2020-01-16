@@ -3,12 +3,22 @@ import './Config.css';
 import { GameContext } from '../../context';
 import { getNewBoard, getPossibleMoves } from '../../utilities/helpers';
 
+function CleanMoves(arr) {
+  return (
+    <ul>
+      {
+          arr.map((value, index) => (
+          <li key={index}>You can move to position: [{value.x}, {value.y}]</li>))
+      }
+    </ul>
+  )
+}
 
 function Config() {
 
     const {board, setBoard, selectedPiece} = useContext(GameContext);
     const { data } = selectedPiece;
-    const flagDetails = data !== undefined && data.state ? <code>Possible moves{getPossibleMoves(data, board)}</code> : <div></div>
+    const flagDetails = data !== undefined && data.state ? <code>Possible moves<br />{CleanMoves(getPossibleMoves(data, board))} </code> : <div></div>
     return (
       <div className="config inline">
           
