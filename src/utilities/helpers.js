@@ -6,8 +6,8 @@ let moves;
 
 /**
  * 
- * @param {integer} x 
- * @param {integer} y
+ * @param {integer} x represents the heigth
+ * @param {integer} y represents the width
  * 
  * Position data structure 
  */
@@ -20,17 +20,13 @@ export const Position = function(x=0, y=0) {
  * 
  * @param {string} color 
  * @param {boolean} state 
- * @param {array} moves 
- * @param {array} jumps 
- * @param {Position object} position 
+ * @param {Position} position 
  * 
  * Piece data structure
  */
-export const Piece = function(color='', state=false, moves=[], jumps=[], position={}) {
+export const Piece = function(color='', state=false, position={}) {
     this.color = color;
     this.state = state;
-    this.moves = moves;
-    this.jumps = jumps;
     this.position = position;
 };
 
@@ -49,7 +45,7 @@ export const getNewBoard = function(initialBoard){
         for (let j = 0; j < newRow.length; j++) {
             const state = !(j % 2 ^ (i+1) % 2); // state 
             const color = (i < 3) ? 'white' : ((i > 4) ? 'red' : ''); // color
-            newRow[j] = new Piece(color, state, [], [], new Position(i, j));
+            newRow[j] = new Piece(color, state, new Position(i, j));
         }
         newBoard.push(newRow);
     }
