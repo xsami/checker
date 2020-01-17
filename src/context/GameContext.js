@@ -20,7 +20,12 @@ export const Provider = props => {
   const resetGame = cBoard => {
     setSelectedPiece({});
     setBoard(getNewBoard(cBoard));
-  }
+  };
+
+  const updateBoard = newBoard => {
+    setBoard(newBoard);
+    setSelectedPiece({});
+  };
 
   const gameContext = {
     board,
@@ -28,7 +33,8 @@ export const Provider = props => {
     selectedPiece,
     setSelectedPiece,
     setPiece,
-    resetGame
+    resetGame,
+    updateBoard
   };
 
   return <Context.Provider value={gameContext}>{children}</Context.Provider>;
