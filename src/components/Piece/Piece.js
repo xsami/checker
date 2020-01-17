@@ -8,7 +8,8 @@ const Piece = props => {
 
     const ClickPiece = () => {
         return setPiece(props);
-    }
+    };
+    
     return (
         <div className={color} 
              onClick={() => ClickPiece()}>
