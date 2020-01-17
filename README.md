@@ -37,5 +37,6 @@ and open the browser in the specified port.
 - Display posible moves by a current piece
 - Check for firebase deploying 
 - Make unit testing
+- Refactoring: Important
 
 Made with :coffee: by xsami
