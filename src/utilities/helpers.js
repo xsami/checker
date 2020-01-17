@@ -248,7 +248,7 @@ export const validateNewPiecePosition = function(piece, newpos, board) {
     }
 
     // TODO: Validate forward movement
-    console.log({piece, newpos, board});
+    // console.log({piece, newpos, board});
 
     return true;
 };
