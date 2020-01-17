@@ -168,7 +168,7 @@ const piecesPossibleJumps = function (xFactor, prevPosition, currPosition, board
     const x1 = xFactor > 0 ? xFactor - 1 : xFactor + 1;
     const y1 = prevPosition.y > y ? y - 1 : y + 1;
 
-    // console.log({x1, y1, color});
+    console.log({x1, y1, color});
 
     // Invalid position validation
     if (!validatePosition(currPosition, boardLen)) {
@@ -237,13 +237,18 @@ export const getPossibleJumps = function(piece, board) {
 
 // TODO: complete validation for the new piece position
 export const validateNewPiecePosition = function(piece, newpos, board) {
-    
+    const xDirection = piece.color === WHITE ? -1 : 1;
+
     if (!validatePosition(newpos, board.length)) {
         return false;
     }
 
     // Validate that new position is empty
     if (board[newpos.x][newpos.y].color !== '') {
+        return false;
+    }
+
+    if (newpos.x + xDirection < piece.position.x) {
         return false;
     }
 
