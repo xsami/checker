@@ -7,8 +7,11 @@ let moves;
 let jumps;
 
 // constant COLORS
-const RED = 'red';
-const WHITE = 'white';
+export const RED = 'red';
+export const WHITE = 'white';
+
+// constant range to jump for a piece
+export const MAX_RANGE_JUMP = 2;
 
 /**
  * 
@@ -235,12 +238,28 @@ export const getPossibleJumps = function(piece, board) {
     return jumps;
 };
 
-// TODO: complete validation for the new piece position
+// Validate if you're making a legal jump
+export const validateJump = function(piece, newpos, board) {
+
+    const diffx = Math.abs(piece.position.x - newpos.x);
+    const xFactor = piece.color === WHITE ? -1 : 1;
+    const yFactor = piece.position.y > newpos.y ? 1: -1;
+
+    // Validate if jump over a piece
+    if (diffx === MAX_RANGE_JUMP) {
+        // Validate you're an enemy piece
+        const tmpMiddlePiece = board[newpos.x + xFactor][newpos.y + yFactor];
+        if (tmpMiddlePiece.color === piece.color || tmpMiddlePiece.color === '') {
+            return false;
+        }
+    }
+    return true;
+};
+
+
+// Validation for the new piece position
 export const validateNewPiecePosition = function(piece, newpos, board) {
     const { color, position } = piece;
-    const MAX_RANGE_JUMP = 2;
-    const xFactor = color === WHITE ? -1 : 1;
-    const yFactor = position.y > newpos.y ? 1: -1;
     const diffx = Math.abs(position.x - newpos.x);
     const diffy = Math.abs(position.y - newpos.y);
 
@@ -273,13 +292,9 @@ export const validateNewPiecePosition = function(piece, newpos, board) {
         return false;
     }
 
-    // Validate if jump over a piece
-    if (diffx === MAX_RANGE_JUMP) {
-        // Validate you're an enemy piece
-        const tmpMiddlePiece = board[newpos.x + xFactor][newpos.y + yFactor];
-        if (tmpMiddlePiece.color === color || tmpMiddlePiece.color === '') {
-            return false;
-        }
+    // Validate jump, to eat an enemy piece
+    if (!validateJump(piece, newpos, board)) {
+        return false;
     }
 
     return true;

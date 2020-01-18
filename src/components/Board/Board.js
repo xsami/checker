@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import './Board.css';
 import { GameContext } from '../../context';
 import Piece from '../Piece/Piece';
-import { Position, Piece as PObj, validateNewPiecePosition } from '../../utilities/helpers';
+import { Position, Piece as PObj, validateNewPiecePosition, MAX_RANGE_JUMP, validateJump, WHITE} from '../../utilities/helpers';
 
 function Board() {
 
@@ -17,17 +17,26 @@ function Board() {
     if (!data) {
         return;
     }
-    
+
     if (!validateNewPiecePosition(data, newpos, board)) {
         return;
     }
 
     const { color, state, position } = data;
     const newBoard = board;
+    const diffx = Math.abs(data.position.x - newpos.x);
+    const xFactor = data.color === WHITE ? -1 : 1;
+    const yFactor = data.position.y > newpos.y ? 1: -1;
 
     newBoard[position.x][position.y] = new PObj('', false, position);
     newBoard[newpos.x][newpos.y] = new PObj(color, state, newpos);
-    // TODO: if is jumping remove the previus piece
+    
+    // If it's jumping remove the previus piece
+    if (diffx === MAX_RANGE_JUMP &&  validateJump(data, newpos, board)) {
+
+        newBoard[newpos.x + xFactor][newpos.y + yFactor] = new PObj('', false, 
+            new Position(newpos.x + xFactor, newpos.y + yFactor));
+    }
     
     // Then update the board
     updateBoard(newBoard);
