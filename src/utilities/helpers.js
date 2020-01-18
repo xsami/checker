@@ -168,10 +168,6 @@ const piecesPossibleJumps = function (xFactor, prevPosition, currPosition, board
     const { x, y } = currPosition;
     const boardLen = board.length;
     const color = xFactor > 0 ? WHITE : RED;
-    const x1 = xFactor > 0 ? xFactor - 1 : xFactor + 1;
-    const y1 = prevPosition.y > y ? y - 1 : y + 1;
-
-    console.log({x1, y1, color});
 
     // Invalid position validation
     if (!validatePosition(currPosition, boardLen)) {
@@ -188,20 +184,15 @@ const piecesPossibleJumps = function (xFactor, prevPosition, currPosition, board
     // Validate that current position isn't the inital position
     if (x !== prevPosition.x) {
 
-        
-        
-
         // Validate if the current position isn't blocked by other piece
         if (board[x][y].color !== '') {
             return;
         }
 
-
-
-        // Validate if the current position isn't blocked by other piece
-        // if (board[x1][y1].color === color || board[x1][y1].color === '') {
-        //     return;
-        // }
+        // Validate jump, to eat an enemy piece
+        if (!validateJump(new Piece(color, true, prevPosition), currPosition, board)) {
+            return;
+        }
 
         jumps.push(currPosition);
     }
@@ -238,7 +229,15 @@ export const getPossibleJumps = function(piece, board) {
     return jumps;
 };
 
-// Validate if you're making a legal jump
+
+/**
+ * 
+ * @param {Piece} piece the piece that will be evaluated
+ * @param {Position} newpos the new position to be placed
+ * @param {Matrix} board the board in which will be performed the action
+ * 
+ * Validate if you're making a legal jump
+ */
 export const validateJump = function(piece, newpos, board) {
 
     const diffx = Math.abs(piece.position.x - newpos.x);
@@ -257,7 +256,14 @@ export const validateJump = function(piece, newpos, board) {
 };
 
 
-// Validation for the new piece position
+/**
+ * 
+ * @param {Piece} piece the piece that will be moved
+ * @param {Position} newpos the new postion which wants to be moved
+ * @param {Matrix} board the board in wich the piece is placed
+ * 
+ * Validation for the new piece position
+ */
 export const validateNewPiecePosition = function(piece, newpos, board) {
     const { color, position } = piece;
     const diffx = Math.abs(position.x - newpos.x);
@@ -287,7 +293,7 @@ export const validateNewPiecePosition = function(piece, newpos, board) {
         return false;
     }
 
-    // Validate: a piece cannot jump over 2 pieces
+    // Validate that a piece cannot jump over 2 (MAX_RANGE_JUMP) pieces
     if (diffx > MAX_RANGE_JUMP) {
         return false;
     }
@@ -300,6 +306,14 @@ export const validateNewPiecePosition = function(piece, newpos, board) {
     return true;
 };
 
+/**
+ * 
+ * @param {Position} pos position to validate
+ * @param {integer} len the length of the board
+ * 
+ * This function return true if a position(x, y) can
+ * be found inside a board of size n x n
+ */
 export const validatePosition = function(pos, len) {
     return (pos.x >= 0 && pos.x < len && pos.y >= 0 && pos.y < len);
 };
