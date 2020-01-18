@@ -3,16 +3,14 @@ import { GameContext } from '../../context';
 import './Piece.css';
 
 const Piece = props => {
-    let color = props.data.color && props.data.state ? props.data.color: '';
-    const { setPiece } = useContext(GameContext);
+    const { data } = props; 
+    const { color, state } = data;
 
-    const ClickPiece = () => {
-        return setPiece(props);
-    };
+    const { setPiece } = useContext(GameContext);
     
     return (
-        <div className={color} 
-             onClick={() => ClickPiece()}>
+        <div className={`${color} ${state}`} 
+             onClick={() => setPiece(props.data)}>
         </div>
     );
 }

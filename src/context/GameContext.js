@@ -1,5 +1,5 @@
-import React, { createContext, useState } from "react";
-import { getNewBoard } from "../utilities/helpers";
+import React, { createContext, useState } from 'react';
+import { getNewBoard } from '../utilities/helpers';
 
 export const Context = createContext({});
 
@@ -13,8 +13,25 @@ export const Provider = props => {
   const [board, setBoard] = useState(initialBoard);
   const [selectedPiece, setSelectedPiece] = useState({});
 
+  const getNewBoardStatus = (brd, status) => {
+    for (let i = 0; i < brd.length; i++) {
+      const row = brd[i];
+      for (let j = 0; j < row.length; j++) {
+        row[j].state = status;
+      }
+    }
+    return brd;
+  };
+
   const setPiece = pieceProps => {
-      setSelectedPiece(pieceProps);
+      
+    const newBoard = getNewBoardStatus(board, false);
+    pieceProps.state = true; // Be sure to do this after getting the new board (factor order of course matters)
+    newBoard[pieceProps.position.x][pieceProps.position.y] = pieceProps;
+
+
+    setSelectedPiece(pieceProps);
+    setBoard(newBoard);
   };
 
   const resetGame = cBoard => {

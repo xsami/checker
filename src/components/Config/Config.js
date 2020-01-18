@@ -20,11 +20,11 @@ function CleanMoves(arr) {
 function Config() {
 
     const {board, selectedPiece, resetGame} = useContext(GameContext);
-    const { data } = selectedPiece;
-    const flagDetails = data !== undefined && data.state ? 
+
+    const flagDetails = selectedPiece.position !== undefined ? 
       <div>
-        <code>Possible moves<br />{CleanMoves(getPossibleMoves(data, board))} </code>
-        <code>Possible jumps<br />{CleanMoves(getPossibleJumps(data, board))} </code>
+        <code>Possible moves<br />{CleanMoves(getPossibleMoves(selectedPiece, board))} </code>
+        <code>Possible jumps<br />{CleanMoves(getPossibleJumps(selectedPiece, board))} </code>
       </div>
       : <div></div>;
 
