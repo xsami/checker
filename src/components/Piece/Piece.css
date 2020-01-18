@@ -20,3 +20,7 @@
     width: 90%;
     margin: 3px;
 }
+
+.true {
+    border: 3px dotted #f5b;
+}
