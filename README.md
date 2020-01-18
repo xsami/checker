@@ -31,10 +31,8 @@ and open the browser in the specified port.
 
 - Dragrabble functionality
 - Display Winner
-- Validate moves
 - King creation
 - AI for self playing
-- Display posible moves by a current piece
 - Check for firebase deploying 
 - Make unit testing
 - Refactoring: Important
