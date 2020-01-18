@@ -9,30 +9,30 @@ function Board() {
   const gameContext = useContext(GameContext);
 
   const { board, selectedPiece, updateBoard } = gameContext;
-  const { data } = selectedPiece;
   // Logic to validate and if its true, perform the move    
   const tryToMovePiece = newpos => {
  
+    const currentPiece = selectedPiece;
     // Validate that there's a piece selected
-    if (!data) {
+    if (!currentPiece.position) {
         return;
     }
 
-    if (!validateNewPiecePosition(data, newpos, board)) {
+    if (!validateNewPiecePosition(currentPiece, newpos, board)) {
         return;
     }
 
-    const { color, state, position } = data;
+    const { color, position } = currentPiece;
     const newBoard = board;
-    const diffx = Math.abs(data.position.x - newpos.x);
-    const xFactor = data.color === WHITE ? -1 : 1;
-    const yFactor = data.position.y > newpos.y ? 1: -1;
+    const diffx = Math.abs(currentPiece.position.x - newpos.x);
+    const xFactor = currentPiece.color === WHITE ? -1 : 1;
+    const yFactor = currentPiece.position.y > newpos.y ? 1: -1;
 
     newBoard[position.x][position.y] = new PObj('', false, position);
-    newBoard[newpos.x][newpos.y] = new PObj(color, state, newpos);
+    newBoard[newpos.x][newpos.y] = new PObj(color, false, newpos);
     
     // If it's jumping remove the previus piece
-    if (diffx === MAX_RANGE_JUMP &&  validateJump(data, newpos, board)) {
+    if (diffx === MAX_RANGE_JUMP &&  validateJump(currentPiece, newpos, board)) {
 
         newBoard[newpos.x + xFactor][newpos.y + yFactor] = new PObj('', false, 
             new Position(newpos.x + xFactor, newpos.y + yFactor));
