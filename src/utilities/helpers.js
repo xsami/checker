@@ -52,9 +52,9 @@ export const getNewBoard = function(initialBoard){
         const newRow = [...initialBoard[i]];
         
         for (let j = 0; j < newRow.length; j++) {
-            const state = !(j % 2 ^ (i+1) % 2); // state 
-            const color = (i < 3) ? WHITE : ((i > 4) ? RED : ''); // color
-            newRow[j] = new Piece(color, state, new Position(i, j));
+            const oddFlag = ((i % 2) !== (j % 2)); 
+            const color = (oddFlag ?  (i < 3) ? WHITE : ((i > 4) ? RED : ''): ''); // color
+            newRow[j] = new Piece(color, false, new Position(i, j));
         }
         newBoard.push(newRow);
     }
@@ -190,7 +190,7 @@ const piecesPossibleJumps = function (xFactor, prevPosition, currPosition, board
         }
 
         // Validate jump, to eat an enemy piece
-        if (!validateJump(new Piece(color, true, prevPosition), currPosition, board)) {
+        if (!validateJump(new Piece(color, false, prevPosition), currPosition, board)) {
             return;
         }
 
