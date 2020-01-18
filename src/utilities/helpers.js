@@ -238,7 +238,9 @@ export const getPossibleJumps = function(piece, board) {
 // TODO: complete validation for the new piece position
 export const validateNewPiecePosition = function(piece, newpos, board) {
     const { color, position } = piece;
-    
+    const MAX_RANGE_JUMP = 2;
+    const xFactor = color === WHITE ? -1 : 1;
+    const yFactor = position.y > newpos.y ? 1: -1;
     const diffx = Math.abs(position.x - newpos.x);
     const diffy = Math.abs(position.y - newpos.y);
 
@@ -264,6 +266,20 @@ export const validateNewPiecePosition = function(piece, newpos, board) {
     // Validate x and y difference
     if (diffx !== diffy) {
         return false;
+    }
+
+    // Validate: a piece cannot jump over 2 pieces
+    if (diffx > MAX_RANGE_JUMP) {
+        return false;
+    }
+
+    // Validate if jump over a piece
+    if (diffx === MAX_RANGE_JUMP) {
+        // Validate you're an enemy piece
+        const tmpMiddlePiece = board[newpos.x + xFactor][newpos.y + yFactor];
+        if (tmpMiddlePiece.color === color || tmpMiddlePiece.color === '') {
+            return false;
+        }
     }
 
     return true;
