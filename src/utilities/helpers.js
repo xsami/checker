@@ -237,7 +237,10 @@ export const getPossibleJumps = function(piece, board) {
 
 // TODO: complete validation for the new piece position
 export const validateNewPiecePosition = function(piece, newpos, board) {
-    const xDirection = piece.color === WHITE ? -1 : 1;
+    const { color, position } = piece;
+    
+    const diffx = Math.abs(position.x - newpos.x);
+    const diffy = Math.abs(position.y - newpos.y);
 
     if (!validatePosition(newpos, board.length)) {
         return false;
@@ -248,12 +251,20 @@ export const validateNewPiecePosition = function(piece, newpos, board) {
         return false;
     }
 
-    if (newpos.x + xDirection < piece.position.x) {
+    // Validate forward movement
+    if ( (color === WHITE && newpos.x < position.x) || (color === RED && newpos.x > position.x)) {
         return false;
     }
 
-    // TODO: Validate forward movement
-    // console.log({piece, newpos, board});
+    // Validate diagonal movement
+    if ((newpos.x % 2) === (newpos.y % 2)) {
+        return false;
+    }
+
+    // Validate x and y difference
+    if (diffx !== diffy) {
+        return false;
+    }
 
     return true;
 };
