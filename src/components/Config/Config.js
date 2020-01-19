@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import './Config.css';
 import { GameContext } from '../../context';
-import { getPossibleMoves, getPossibleJumps } from '../../utilities/helpers';
+import { getPossibleMoves, getPossibleJumps, WHITE, RED, getAllPossibleMoves } from '../../utilities/helpers';
 
 function CleanMoves(arr) {
   return (
@@ -27,6 +27,11 @@ function Config() {
         <code>Possible jumps<br />{CleanMoves(getPossibleJumps(selectedPiece, board))} </code>
       </div>
       : <div></div>;
+    
+    const possibleMoves = <div className="a-detail">
+        <code>ALL {WHITE} possible moves<br />{CleanMoves(getAllPossibleMoves(board, WHITE))} </code>
+        <code>ALL {RED} possible moves<br />{CleanMoves(getAllPossibleMoves(board, RED))} </code>
+      </div>;
 
     return (
       <div className="config inline">
@@ -45,6 +50,7 @@ function Config() {
           <div className="details">
               <h2>Details</h2>
               {flagDetails}
+              {possibleMoves}
           </div>
       </div>
     );

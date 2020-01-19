@@ -317,3 +317,38 @@ export const validateNewPiecePosition = function(piece, newpos, board) {
 export const validatePosition = function(pos, len) {
     return (pos.x >= 0 && pos.x < len && pos.y >= 0 && pos.y < len);
 };
+
+
+const removeDuplicatedPositions = function(array) {
+    let result = [];
+    array.forEach(element => {
+        element.forEach(e => {
+            result.push(e);
+        });
+    });
+
+    return [...result];
+};
+
+/**
+ * 
+ * @param {Matrix} board 
+ * @param {string} color 
+ * 
+ * Get all the possible moves for the "color" (white, red) pieces
+ */
+export const getAllPossibleMoves = function(board, color) {
+    
+    let result = [];
+
+    board.forEach(row => {
+        row.forEach(piece => {
+            if (piece.color === color) {
+                result = [...result, getPossibleMoves(piece, board)];
+            }
+        });
+    });
+    console.log(result);
+
+    return removeDuplicatedPositions(result);
+};
