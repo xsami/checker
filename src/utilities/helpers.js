@@ -348,7 +348,5 @@ export const getAllPossibleMoves = function(board, color) {
             }
         });
     });
-    console.log(result);
-
     return removeDuplicatedPositions(result);
 };
