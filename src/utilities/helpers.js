@@ -62,6 +62,11 @@ export const getNewBoard = function(initialBoard){
     return newBoard;
 };
 
+// TODO: perform the action to know if a piece will become King
+const canBecomeKing = function(piece, board) {
+
+};
+
 /**
  * 
  * @param {matrix} toClone 
